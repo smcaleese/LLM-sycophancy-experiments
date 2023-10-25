@@ -259,3 +259,8 @@ class Llama7BChatWrapper:
         probs_percent = [int(v * 100) for v in values.tolist()]
         tokens = self.tokenizer.batch_decode(indices.unsqueeze(-1))
         return list(zip(tokens, probs_percent)), list(zip(tokens, values.tolist()))
+
+if __name__ == "__main__":
+    HUGGINGFACE_TOKEN = "123"
+    SYSTEM_PROMPT = "You are a helpful, honest and concise assistant."
+    model = Llama7BChatWrapper(HUGGINGFACE_TOKEN, SYSTEM_PROMPT)
