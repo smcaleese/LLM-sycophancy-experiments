@@ -13,9 +13,21 @@ import matplotlib.cm as cm
 import matplotlib.pyplot as plt
 import numpy as np
 import argparse
-from plot_results import get_avg_key_prob
 
 PARENT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def get_avg_key_prob(results: Dict[str, Any], key: str) -> float:
+    match_key_prob_sum = 0.0
+    for result in results:
+        matching_value = result[key]
+        denom = result["a_prob"] + result["b_prob"]
+        if "A" in matching_value:
+            match_key_prob_sum += result["a_prob"] / denom
+        elif "B" in matching_value:
+            match_key_prob_sum += result["b_prob"] / denom
+    return match_key_prob_sum / len(results)
+
 
 def get_data(prompt_num: str) -> Dict[str, Any]:
     fname = f"results_few_shot_{prompt_num}.json"
